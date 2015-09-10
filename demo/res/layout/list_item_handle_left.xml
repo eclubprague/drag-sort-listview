@@ -15,7 +15,7 @@
     android:layout_width="wrap_content"
     android:layout_height="@dimen/item_height"
     android:layout_weight="1"
-    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textAppearance="?android:attr/textAppearanceLarge"
     android:gravity="center_vertical"
     android:paddingLeft="8dp" />
 </LinearLayout>

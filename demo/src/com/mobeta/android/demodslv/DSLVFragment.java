@@ -3,6 +3,7 @@ package com.mobeta.android.demodslv;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,26 +66,6 @@ public class DSLVFragment extends ListFragment {
         super();
     }
 
-    protected int getLayout() {
-        // this DSLV xml declaration does not call for the use
-        // of the default DragSortController; therefore,
-        // DSLVFragment has a buildController() method.
-        return R.layout.dslv_fragment_main;
-    }
-
-    /**
-     * Return list item layout resource passed to the ArrayAdapter.
-     */
-    protected int getItemLayout() {
-        /*if (removeMode == DragSortController.FLING_LEFT_REMOVE || removeMode == DragSortController.SLIDE_LEFT_REMOVE) {
-            return R.layout.list_item_handle_right;
-        } else */
-        if (removeMode == DragSortController.CLICK_REMOVE) {
-            return R.layout.list_item_click_remove;
-        } else {
-            return R.layout.list_item_handle_left;
-        }
-    }
 
     public DragSortController getController() {
         return mController;
@@ -98,7 +79,7 @@ public class DSLVFragment extends ListFragment {
         String[] array = getResources().getStringArray(R.array.jazz_artist_names);
         List<String> list = new ArrayList<String>(Arrays.asList(array));
 
-        mAdapter = new ArrayAdapter<String>(getActivity(), getItemLayout(), R.id.text, list);
+        mAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_handle_left, R.id.text, list);
         setListAdapter(mAdapter);
     }
 
@@ -122,8 +103,8 @@ public class DSLVFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        mDslv = (DragSortListView) inflater.inflate(getLayout(), container, false);
+                             Bundle savedInstanceState) {
+        mDslv = (DragSortListView) inflater.inflate(R.layout.dslv_fragment_main, container, false);
 
         mController = buildController(mDslv);
         mDslv.setFloatViewManager(mController);

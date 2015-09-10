@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ public class TestBedDSLV extends FragmentActivity implements RemoveModeDialog.Re
         DragInitModeDialog.DragOkListener, EnablesDialog.EnabledOkListener {
 
     private static final String TAG_DSLV_FRAGMENT = "dslv_fragment";
+    public static final String TAG = TestBedDSLV.class.getSimpleName();
 
     private int mNumHeaders = 0;
     private int mNumFooters = 0;
@@ -49,6 +51,7 @@ public class TestBedDSLV extends FragmentActivity implements RemoveModeDialog.Re
 
     @Override
     public void onRemoveOkClick(int removeMode) {
+        Log.d(TAG, "onRemoveOkClick");
         if (removeMode != mRemoveMode) {
             mRemoveMode = removeMode;
             getSupportFragmentManager().beginTransaction()

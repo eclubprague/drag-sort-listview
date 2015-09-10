@@ -5,10 +5,12 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 
 public class EnablesDialog extends DialogFragment {
 
     private static final String EXTRA_ENABLED_FLAGS = "enabled_flags";
+    public static final String TAG = EnablesDialog.class.getSimpleName();
 
     private boolean[] mEnabled;
 
@@ -16,7 +18,7 @@ public class EnablesDialog extends DialogFragment {
 
     public static EnablesDialog newInstance(boolean drag, boolean sort, boolean remove) {
         Bundle args = new Bundle();
-        args.putBooleanArray(EXTRA_ENABLED_FLAGS, new boolean[] { drag, sort, remove });
+        args.putBooleanArray(EXTRA_ENABLED_FLAGS, new boolean[]{drag, sort, remove});
 
         EnablesDialog frag = new EnablesDialog();
         frag.setArguments(args);
@@ -37,9 +39,10 @@ public class EnablesDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateDialog");
         mEnabled = getArguments().getBooleanArray(EXTRA_ENABLED_FLAGS);
         if (mEnabled == null) {
-            mEnabled = new boolean[] { true, true, false };
+            mEnabled = new boolean[]{true, true, false};
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -52,7 +55,7 @@ public class EnablesDialog extends DialogFragment {
                                 mEnabled[which] = isChecked;
                             }
                         })
-                // Set the action buttons
+                        // Set the action buttons
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
