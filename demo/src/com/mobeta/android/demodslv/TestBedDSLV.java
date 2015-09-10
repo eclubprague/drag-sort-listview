@@ -19,15 +19,6 @@ public class TestBedDSLV extends FragmentActivity {
     private static final String TAG_DSLV_FRAGMENT = "dslv_fragment";
     public static final String TAG = TestBedDSLV.class.getSimpleName();
 
-    private int mNumHeaders = 0;
-    private int mNumFooters = 0;
-
-    private int mDragStartMode = DragSortController.ON_DRAG;
-    private boolean mRemoveEnabled = true;
-    private int mRemoveMode = DragSortController.FLING_REMOVE;
-    private boolean mSortEnabled = true;
-    private boolean mDragEnabled = true;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,19 +37,15 @@ public class TestBedDSLV extends FragmentActivity {
         return true;
     }
 
-    
+
     private Fragment getNewDslvFragment() {
-        DSLVFragmentClicks f = DSLVFragmentClicks.newInstance(mNumHeaders, mNumFooters);
-        f.removeMode = mRemoveMode;
-        f.removeEnabled = mRemoveEnabled;
-        f.dragStartMode = mDragStartMode;
-        f.sortEnabled = mSortEnabled;
-        f.dragEnabled = mDragEnabled;
+        DSLVFragmentClicks f = DSLVFragmentClicks.newInstance(0, 0);
+        f.removeMode = DragSortController.FLING_REMOVE;
+        f.removeEnabled = true;
+        f.dragStartMode = DragSortController.ON_DRAG;
+        f.sortEnabled = true;
+        f.dragEnabled = true;
         return f;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
 }
