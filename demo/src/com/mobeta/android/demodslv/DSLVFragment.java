@@ -3,7 +3,6 @@ package com.mobeta.android.demodslv;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,16 +50,6 @@ public class DSLVFragment extends ListFragment {
     public boolean sortEnabled = true;
     public boolean dragEnabled = true;
 
-    public static DSLVFragment newInstance(int headers, int footers) {
-        DSLVFragment f = new DSLVFragment();
-
-        Bundle args = new Bundle();
-        args.putInt("headers", headers);
-        args.putInt("footers", footers);
-        f.setArguments(args);
-
-        return f;
-    }
 
     public DSLVFragment() {
         super();
@@ -71,42 +60,23 @@ public class DSLVFragment extends ListFragment {
         return mController;
     }
 
-    /**
-     * Called from DSLVFragment.onActivityCreated(). Override to
-     * set a different mAdapter.
-     */
-    protected void setListAdapter() {
-        String[] array = getResources().getStringArray(R.array.jazz_artist_names);
-        List<String> list = new ArrayList<String>(Arrays.asList(array));
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        mDslv = (DragSortListView) inflater.inflate(R.layout.dslv_fragment_main, container, false);
 
-        mAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_handle_left, R.id.text, list);
-        setListAdapter(mAdapter);
-    }
-
-    /**
-     * Called in onCreateView. Override this to provide a custom
-     * DragSortController.
-     */
-    protected DragSortController buildController(DragSortListView dslv) {
         // defaults are
         //   dragStartMode = onDown
         //   removeMode = flingRight
-        DragSortController controller = new DragSortController(dslv);
+        DragSortController controller = new DragSortController(mDslv);
         controller.setDragHandleId(R.id.drag_handle);
         controller.setClickRemoveId(R.id.click_remove);
         controller.setRemoveEnabled(removeEnabled);
         controller.setSortEnabled(sortEnabled);
         controller.setDragInitMode(dragStartMode);
         controller.setRemoveMode(removeMode);
-        return controller;
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mDslv = (DragSortListView) inflater.inflate(R.layout.dslv_fragment_main, container, false);
-
-        mController = buildController(mDslv);
+        mController = controller;
         mDslv.setFloatViewManager(mController);
         mDslv.setOnTouchListener(mController);
         mDslv.setDragEnabled(dragEnabled);
@@ -123,43 +93,13 @@ public class DSLVFragment extends ListFragment {
         mDslv.setDropListener(mDropListener);
         mDslv.setRemoveListener(mRemoveListener);
 
-        Bundle args = getArguments();
-        int headers = 0;
-        int footers = 0;
-        if (args != null) {
-            headers = args.getInt("headers", 0);
-            footers = args.getInt("footers", 0);
-        }
 
-        for (int i = 0; i < headers; i++) {
-            addHeader(getActivity(), mDslv);
-        }
-        for (int i = 0; i < footers; i++) {
-            addFooter(getActivity(), mDslv);
-        }
+        String[] array = getResources().getStringArray(R.array.jazz_artist_names);
+        List<String> list = new ArrayList<>(Arrays.asList(array));
 
-        setListAdapter();
+        mAdapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_handle_left, R.id.text, list);
+        setListAdapter(mAdapter);
     }
 
-
-    public static void addHeader(Activity activity, DragSortListView dslv) {
-        LayoutInflater inflater = activity.getLayoutInflater();
-        int count = dslv.getHeaderViewsCount();
-
-        TextView header = (TextView) inflater.inflate(R.layout.header_footer, null);
-        header.setText("Header #" + (count + 1));
-
-        dslv.addHeaderView(header, null, false);
-    }
-
-    public static void addFooter(Activity activity, DragSortListView dslv) {
-        LayoutInflater inflater = activity.getLayoutInflater();
-        int count = dslv.getFooterViewsCount();
-
-        TextView footer = (TextView) inflater.inflate(R.layout.header_footer, null);
-        footer.setText("Footer #" + (count + 1));
-
-        dslv.addFooterView(footer, null, false);
-    }
 
 }

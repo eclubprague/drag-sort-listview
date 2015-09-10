@@ -39,7 +39,7 @@ public class TestBedDSLV extends FragmentActivity {
 
 
     private Fragment getNewDslvFragment() {
-        DSLVFragmentClicks f = DSLVFragmentClicks.newInstance(0, 0);
+        DSLVFragmentClicks f = new DSLVFragmentClicks();
         f.removeMode = DragSortController.FLING_REMOVE;
         f.removeEnabled = true;
         f.dragStartMode = DragSortController.ON_DRAG;

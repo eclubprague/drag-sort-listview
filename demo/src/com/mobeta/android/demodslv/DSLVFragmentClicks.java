@@ -8,17 +8,6 @@ import android.widget.Toast;
 
 public class DSLVFragmentClicks extends DSLVFragment {
 
-    public static DSLVFragmentClicks newInstance(int headers, int footers) {
-        DSLVFragmentClicks f = new DSLVFragmentClicks();
-
-        Bundle args = new Bundle();
-        args.putInt("headers", headers);
-        args.putInt("footers", footers);
-        f.setArguments(args);
-
-        return f;
-    }
-
     public DSLVFragmentClicks() {
         super();
     }
