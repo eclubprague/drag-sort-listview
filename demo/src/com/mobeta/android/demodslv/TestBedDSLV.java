@@ -14,8 +14,7 @@ import com.mobeta.android.dslv.DragSortController;
 import com.mobeta.android.dslv.DragSortListView;
 
 
-public class TestBedDSLV extends FragmentActivity implements RemoveModeDialog.RemoveOkListener,
-        DragInitModeDialog.DragOkListener {
+public class TestBedDSLV extends FragmentActivity {
 
     private static final String TAG_DSLV_FRAGMENT = "dslv_fragment";
     public static final String TAG = TestBedDSLV.class.getSimpleName();
@@ -47,24 +46,6 @@ public class TestBedDSLV extends FragmentActivity implements RemoveModeDialog.Re
         return true;
     }
 
-    @Override
-    public void onRemoveOkClick(int removeMode) {
-        Log.d(TAG, "onRemoveOkClick");
-        if (removeMode != mRemoveMode) {
-            mRemoveMode = removeMode;
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.test_bed, getNewDslvFragment(), TAG_DSLV_FRAGMENT)
-                    .commit();
-        }
-    }
-
-    @Override
-    public void onDragOkClick(int dragStartMode) {
-        mDragStartMode = dragStartMode;
-        DSLVFragment f =
-                (DSLVFragment) getSupportFragmentManager().findFragmentByTag(TAG_DSLV_FRAGMENT);
-        f.getController().setDragInitMode(dragStartMode);
-    }
     
     private Fragment getNewDslvFragment() {
         DSLVFragmentClicks f = DSLVFragmentClicks.newInstance(mNumHeaders, mNumFooters);
